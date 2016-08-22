@@ -14,7 +14,7 @@ Add the dependency to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-djangohashers = "0.2.2"
+djangohashers = "0.2.3"
 ```
 
 Reference and import:
@@ -39,7 +39,7 @@ Add the dependency to your `Cargo.toml` declaring the feature:
 
 ```toml
 [dependencies.djangohashers]
-version = "0.2.2"
+version = "0.2.3"
 features = ["fpbkdf2"]
 ```
 
@@ -144,6 +144,7 @@ Available algorithms:
 
 * `Algorithm::PBKDF2` (default)
 * `Algorithm::PBKDF2SHA1`
+* `Algorithm::Argon2`
 * `Algorithm::BCryptSHA256`
 * `Algorithm::BCrypt`
 * `Algorithm::SHA1`

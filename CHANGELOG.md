@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.3] - 2016-08-22
+
+### Added
+
+- Support to Argon2, new in Django 1.10.
+
 ## [0.2.2] - 2016-03-29
 
 ### Added

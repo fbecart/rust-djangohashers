@@ -4,6 +4,7 @@ extern crate rustc_serialize;
 extern crate crypto;
 extern crate bcrypt;
 extern crate pwhash;
+extern crate argon2rs;
 
 #[cfg(fpbkdf2)]
 extern crate fastpbkdf2;

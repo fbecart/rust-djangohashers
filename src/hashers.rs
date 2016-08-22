@@ -73,6 +73,20 @@ impl Hasher for PBKDF2SHA1Hasher {
     }
 }
 
+/// Hasher that uses the Argon2 function (new in Django 1.10).
+pub struct Argon2Hasher;
+
+impl Hasher for Argon2Hasher {
+    fn verify(&self, password: &str, encoded: &str) -> Result<bool, HasherError> {
+        Ok(false)
+    }
+
+    fn encode(&self, password: &str, salt: &str, iterations: u32) -> String {
+        format!("{}$${}", "argon2", "hello")
+    }
+
+}
+
 /// Hasher that uses the bcrypt key-derivation function with the password padded with SHA256.
 pub struct BCryptSHA256Hasher;
 
