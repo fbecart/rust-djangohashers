@@ -82,7 +82,7 @@ What is **not** covered:
 
 ## Usage
 
-[API Documentation](https://crates.fyi/crates/djangohashers/0.1.0/), thanks to **crates.fyi** project!
+[API Documentation](https://docs.rs/djangohashers/), thanks to **docs.rs** project!
 
 ### Verifying a Hashed Password
 

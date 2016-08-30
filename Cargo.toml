@@ -2,6 +2,7 @@
 name = "djangohashers"
 version = "0.2.3"
 authors = ["Ronaldo Racum <ronaldo@racum.com>"]
+documentation = "https://docs.rs/djangohashers/"
 license = "BSD-3-Clause"
 readme = "README.md"
 repository = "https://github.com/racum/rust-djangohashers"
