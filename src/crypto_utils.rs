@@ -15,6 +15,7 @@ use self::crypto::sha2::Sha256;
 use self::crypto::sha1::Sha1;
 use self::crypto::md5::Md5;
 use self::pwhash::unix_crypt::hash_with;
+use self::argon2rs::{Argon2, Variant};
 
 #[cfg(not(fpbkdf2))]
 use self::crypto::hmac::Hmac;
@@ -81,4 +82,11 @@ pub fn hash_unix_crypt(password: &str, salt: &str) -> String {
         Ok(value) => value,
         Err(_) => "".to_string()
     }
+}
+
+pub fn hash_argon2(password: &str, salt: &str, time_cost: u32, memory_cost: u32, parallelism: u32) -> String {
+    let mut result = [0u8; 32];
+    let a2 = Argon2::new(time_cost, parallelism, memory_cost, Variant::Argon2i).ok().unwrap();
+    a2.hash(&mut result, password.as_bytes(), salt.as_bytes(), &[], &[]);
+    result.to_base64(STANDARD)
 }

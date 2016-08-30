@@ -78,11 +78,28 @@ pub struct Argon2Hasher;
 
 impl Hasher for Argon2Hasher {
     fn verify(&self, password: &str, encoded: &str) -> Result<bool, HasherError> {
-        Ok(false)
+        // TODO: Use a more reliable way to parse the encoded string:
+        let encoded_part: Vec<&str> = encoded.split("$").collect();
+        let settings = encoded_part[3];
+        let salt = encoded_part[4];
+        let hash = encoded_part[5];
+        let settings_part: Vec<&str> = settings.split(",").collect();
+        let memory_cost: u32 = settings_part[0].split("=").collect::<Vec<&str>>()[1].parse::<u32>().unwrap();
+        let time_cost: u32 = settings_part[1].split("=").collect::<Vec<&str>>()[1].parse::<u32>().unwrap();
+        let parallelism: u32 = settings_part[2].split("=").collect::<Vec<&str>>()[1].parse::<u32>().unwrap();
+        Ok(hash == crypto_utils::hash_argon2(password, salt, time_cost, memory_cost, parallelism))
     }
 
-    fn encode(&self, password: &str, salt: &str, iterations: u32) -> String {
-        format!("{}$${}", "argon2", "hello")
+    fn encode(&self, password: &str, salt: &str, _: u32) -> String {
+        // "Profile 1": Settings used in Django 1.10: This may change in the
+        // future, if so, use the "iterations" parameter as a profile input,
+        // and match against it:
+        let memory_cost: u32 = 512;  // "kib" in Argon2's lingo.
+        let time_cost: u32 = 2;  // "passes" in Argon2's lingo.
+        let parallelism: u32 = 2;  // "lanes" in Argon2's lingo.
+
+        let hash = crypto_utils::hash_argon2(password, salt, time_cost, memory_cost, parallelism);
+        format!("argon2$argon2i$v=19$m={},t={},p={}${}${}", memory_cost, time_cost, parallelism, salt, hash)
     }
 
 }
